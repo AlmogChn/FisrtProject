@@ -14,7 +14,7 @@ pipeline{
 
         stage('run fronted server') {
             steps {
-                 bat 'python web_app.py'
+                 bat 'start /min python web_app.py'
             }
         }
 
@@ -23,7 +23,7 @@ pipeline{
                 expression {params.TEST =='backend'}
             }
             steps {
-                 bat 'backend_testing.py'
+                 bat 'start /min backend_testing.py'
             }
         }
             stage('frontend testing') {

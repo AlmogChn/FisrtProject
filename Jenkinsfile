@@ -9,7 +9,7 @@ pipeline{
         stage('run backend server') {
             steps {
                 script {
-                    bat 'py start /min rest_app.py'
+                    bat 'start /min rest_app.py'
                 }
             }
         }

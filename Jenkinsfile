@@ -8,13 +8,13 @@ pipeline{
     stages{
         stage('run backend server') {
              steps {
-                 bat 'rest_app.py'
+                 sh 'rest_app.py'
              }
         }
 
         stage('run fronted server') {
             steps {
-                 bat 'start /min python web_app.py'
+                 sh 'start /min python web_app.py'
             }
         }
 

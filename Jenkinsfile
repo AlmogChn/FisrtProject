@@ -3,7 +3,77 @@ pipeline{
     parameters { 
         choice (name: 'TEST',
                 choices: ['combined', 'frontend', 'backend'],
+                description: 'Please selepipeline{ 
+    agent any
+    parameters { 
+        choice (name: 'TEST',
+                choices: ['combined', 'frontend', 'backend'],
                 description: 'Please select the environment which you want to perform the test.')
+    }
+    stages{
+        stage('checkout') {
+            steps {
+                script {
+                    properties([pipelineTriggers([pollSCM('* * * * *')])])
+                }
+                git 'https://github.com/AlmogChn/project_second_part.git'
+            }
+        }
+        stage('run backend server') {
+            steps {
+                script {
+                    bat 'python start /min rest_app.py'
+                }
+            }
+        }
+        stage('run fronted server') {
+            steps {
+                script {
+                    bat 'python start /min web_app.py'
+                }
+            }
+        }
+        stage('backend testing') {
+            when { 
+                expression {params.TEST =='backend'}
+            }
+            steps {
+                script {
+                    bat 'python backend_testing.py'
+                }
+            }
+        }
+        stage('frontend testing'){
+            when {
+                expression {params.TEST =='frontend'}
+            }
+            steps{
+                script {
+                    bat 'python frontend_testing.py'
+                }
+            }
+        }
+        stage('combined testing') {
+            when { 
+                expression {params.TEST =='combined'}
+            }
+            steps {
+                input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
+                script {
+                    bat 'python combined_testing.py'
+                }
+            }
+        }    
+        stage('clean environment') {
+            steps {
+                script {
+                bat 'python lean_environment.py'
+                }
+            }
+        }
+        
+    }    
+}ct the environment which you want to perform the test.')
     }
     stages{
         stage('checkout') {

@@ -8,12 +8,12 @@ pipeline{
     stages{
         stage('run backend server') {
              steps {
-                 bat 'start /min rest_app.py'
+                 bat 'py start /min rest_app.py'
              }
         }
         stage('run fronted server') {
             steps {
-                 bat 'start /min web_app.py'
+                 bat 'py start /min web_app.py'
             }
         }
         stage('backend testing') {
@@ -21,7 +21,7 @@ pipeline{
                 expression {params.TEST =='backend'}
             }
             steps {
-                 bat 'backend_testing.py'
+                 bat 'py backend_testing.py'
             }
         }
         stage('frontend testing'){
@@ -29,7 +29,7 @@ pipeline{
                 expression {params.TEST =='frontend'}
             }
             steps{
-                bat 'frontend_testing.py'
+                bat 'py frontend_testing.py'
             }
         }
         stage('combined testing') {
@@ -38,12 +38,12 @@ pipeline{
             }
             steps {
                 input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
-                 bat 'combined_testing.py'
+                 bat 'py combined_testing.py'
             }
         }    
         stage('clean environment') {
             steps {
-                 bat 'clean_environment.py'
+                 bat 'cpy lean_environment.py'
             }
         }
         

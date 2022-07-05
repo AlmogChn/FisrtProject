@@ -26,17 +26,17 @@ pipeline{
                  bat 'start /min backend_testing.py'
             }
         }
-            stage('frontend testing') {
+        stage('frontend testing') {
             when { 
                 expression {params.TEST =='frontend'}
             }
             steps {
                 input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
                  bat 'frontend_testing.py'
-            }
+        }
         }
 
-            stage('combined testing') {
+        stage('combined testing') {
             when { 
                 expression {params.TEST =='combined'}
             }
@@ -45,5 +45,11 @@ pipeline{
                  bat 'combined_testing.py'
             }
         }    
+        stage('run fronted server') {
+            steps {
+                 bat 'clean_environment.py'
+            }
+        }
+        
     }    
 }

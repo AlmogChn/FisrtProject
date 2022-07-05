@@ -2,18 +2,22 @@ pipeline{
     agent any
     parameters { 
         choice (name: 'TEST',
-               choices: ['combined', 'frontend', 'backend'],
-               description: 'Please select the environment which you want to perform the test.')
+                choices: ['combined', 'frontend', 'backend'],
+                description: 'Please select the environment which you want to perform the test.')
     }
     stages{
         stage('run backend server') {
              steps {
-                 bat 'python start /min rest_app.py'
+                script{ 
+                    bat 'python start /min rest_app.py'
+                }
              }
         }
         stage('run fronted server') {
             steps {
-                 bat 'python start /min web_app.py'
+                script {
+                    bat 'python start /min web_app.py'
+                }
             }
         }
         stage('backend testing') {
@@ -21,7 +25,9 @@ pipeline{
                 expression {params.TEST =='backend'}
             }
             steps {
-                 bat 'python backend_testing.py'
+                script {
+                    bat 'python backend_testing.py'
+                }
             }
         }
         stage('frontend testing'){
@@ -29,7 +35,9 @@ pipeline{
                 expression {params.TEST =='frontend'}
             }
             steps{
-                bat 'python frontend_testing.py'
+                script {
+                    bat 'python frontend_testing.py'
+                }
             }
         }
         stage('combined testing') {
@@ -38,12 +46,16 @@ pipeline{
             }
             steps {
                 input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
-                 bat 'python combined_testing.py'
+                script {
+                    bat 'python combined_testing.py'
+                }
             }
         }    
         stage('clean environment') {
             steps {
-                 bat 'python lean_environment.py'
+                script {
+                bat 'python lean_environment.py'
+                }
             }
         }
         

@@ -1,17 +1,17 @@
 pipeline{ 
     agent any
-    // parameters { 
-    //     choice (name: 'TEST',
-    //             choices: ['combined', 'frontend', 'backend'],
-    //             description: 'Please select the environment which you want to perform the test.')
-    // }
+    parameters { 
+        choice (name: 'TEST',
+                choices: ['combined', 'frontend', 'backend'],
+                description: 'Please select the environment which you want to perform the test.')
+    }
     stages{
         stage('run backend server') {
-            steps {
-                script {
+             steps {
+                script{ 
                     bat 'python start /min rest_app.py'
                 }
-            }
+             }
         }
         stage('run fronted server') {
             steps {

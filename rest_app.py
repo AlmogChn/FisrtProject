@@ -1,5 +1,7 @@
 import db_connector
 from flask import Flask, request
+import os
+import signal
 
 app = Flask(__name__)
 
@@ -44,6 +46,11 @@ def user(user_id):
 
     else:
         return 'wrong method'
+
+@app.route('/stop_server')
+def stop_server():
+ os.kill(os.getpid(), signal.CTRL_C_EVENT)
+ return 'Server stopped'
 
 
 app.run(host='127.0.0.1', debug=True, port=5000)

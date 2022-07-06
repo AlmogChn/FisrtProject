@@ -8,9 +8,6 @@ pipeline{
     stages{
         stage('checkout') {
             steps {
-                script{
-                    properties([pipelineTriggers([pollSCM('* * * * *')])])
-                }
                 git 'https://github.com/AlmogChn/project_second_part.git'
             }
         }

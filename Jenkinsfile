@@ -8,7 +8,7 @@ pipeline{
     stages{
         stage('checkout') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/AlmogChn/project_second_part.git']]])
+                git 'https://github.com/AlmogChn/project_second_part.git'
             }
         }
         stage('run backend server') {

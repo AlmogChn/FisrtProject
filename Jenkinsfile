@@ -18,7 +18,6 @@ pipeline{
              steps {
                 script{ 
                     bat 'python start /min rest_app.py'
-                    bat 'python rest_app.py'
                 }
              }
         }

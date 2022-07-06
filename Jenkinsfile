@@ -62,7 +62,7 @@ pipeline{
         stage('clean environment') {
             steps {
                 script {
-                bat 'python lean_environment.py'
+                    bat 'python clean_environment.py'
                 }
             }
         }

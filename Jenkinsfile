@@ -6,11 +6,13 @@ pipeline{
                 description: 'Please select the environment which you want to perform the test.')
     }
     stages{
-        stage ('checkout'){
-            script{
-                properties([pipelineTriggers([pollSCM('* * * * *')])])
+        steps {
+            stage ('checkout'){
+                script{
+                    properties([pipelineTriggers([pollSCM('* * * * *')])])
+                }
+                git 'https://github.com/AlmogChn/project_second_part.git'
             }
-            git 'https://github.com/AlmogChn/project_second_part.git'
         }
         stage('run backend server') {
              steps {
@@ -63,6 +65,6 @@ pipeline{
                 bat 'python lean_environment.py'
                 }
             }
-        }    
+        }
     }    
 }

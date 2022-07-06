@@ -6,8 +6,8 @@ pipeline{
                 description: 'Please select the environment which you want to perform the test.')
     }
     stages{
-        steps {
-            stage ('checkout'){
+        stage('checkout') {
+            steps {
                 script{
                     properties([pipelineTriggers([pollSCM('* * * * *')])])
                 }

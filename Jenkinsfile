@@ -6,6 +6,12 @@ pipeline{
                 description: 'Please select the environment which you want to perform the test.')
     }
     stages{
+        stage ('checkout'){
+            script{
+                properties([pipelineTriggers([pollSCM('* * * * *')])])
+            }
+            git 'https://github.com/AlmogChn/project_second_part.git'
+        }
         stage('run backend server') {
              steps {
                 script{ 
@@ -13,14 +19,6 @@ pipeline{
                 }
              }
         }
-    stage('checkout') {
-        steps {
-            script {
-                properties([pipelineTriggers([pollSCM('* * * * *')])])
-            }
-            git 'https://github.com/Dgotlieb/JenkinsTest.git'
-            }
-    }
         stage('run fronted server') {
             steps {
                 script {
@@ -65,7 +63,6 @@ pipeline{
                 bat 'python lean_environment.py'
                 }
             }
-        }
-        
+        }    
     }    
 }

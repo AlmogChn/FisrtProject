@@ -13,6 +13,14 @@ pipeline{
                 }
              }
         }
+    stage('checkout') {
+        steps {
+            script {
+                properties([pipelineTriggers([pollSCM('* * * * *')])])
+            }
+            git 'https://github.com/Dgotlieb/JenkinsTest.git'
+            }
+    }
         stage('run fronted server') {
             steps {
                 script {

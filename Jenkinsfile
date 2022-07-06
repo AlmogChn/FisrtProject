@@ -8,7 +8,7 @@ pipeline{
     stages{
         stage('checkout') {
             steps {
-                git 'https://github.com/AlmogChn/project_second_part.git'
+                git 'https://github.com/AlmogChn/project_second_part'
             }
         }
         stage('run backend server') {

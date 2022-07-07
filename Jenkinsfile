@@ -23,7 +23,7 @@ pipeline{
         stage('run backend server') {
              steps {
                 script{ 
-                    sh ' nohup python rest_app.py & ${CREDS_USR} ${CREDS_PSW}'
+                    sh ' nohup python rest_app.py &'
                 }
              }
         }

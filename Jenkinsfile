@@ -1,5 +1,11 @@
 pipeline{ 
     agent any
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
+    }
+    environment {
+        CERDS = credentials('Database')
+    }
     parameters { 
         choice (name: 'TEST',
                 choices: ['combined', 'frontend', 'backend'],

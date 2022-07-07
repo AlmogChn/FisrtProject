@@ -5,7 +5,7 @@ import pymysql
 import db_connector
 from flask import Flask, request
 import os
-
+import signal
 
 app = Flask(__name__)
 

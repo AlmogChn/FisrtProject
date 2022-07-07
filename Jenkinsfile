@@ -30,7 +30,7 @@ pipeline{
         stage('run fronted server') {
             steps {
                 script {
-                    sh ' nohup python web_app.py & ${CREDS_USR}:${CREDS_PSW}'
+                    sh ' nohup python web_app.py & ${CREDS_USR} ${CREDS_PSW}'
                 }
             }
         }

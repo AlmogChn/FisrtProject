@@ -1,5 +1,15 @@
+import sys
+
+import pymysql
 import requests
 import db_connector
+
+db_user = sys.argv[1]
+db_password = sys.argv[2]
+db = pymysql.connect(host='remotemysql.com', port=3306, user=db_user, password=db_password, db='AEfWGNA9zC')
+cur = db.cursor()
+db.autocommit(True)
+
 try:
     res = requests.post('http://127.0.0.1:5000/users/86', json={"user_name": 'try'})
     print(res.json())

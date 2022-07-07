@@ -1,6 +1,3 @@
-import sys
-
-import pymysql
 import requests
 import db_connector
 

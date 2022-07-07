@@ -6,11 +6,11 @@ import sys
 db_user = sys.argv[1]
 db_password = sys.argv[2]
 
-db = pymysql.connect(host='remotemysql.com', port=3306, user='AEfWGNA9zC', password='g0PRYTjC6R', db='AEfWGNA9zC')
+db = pymysql.connect(host='remotemysql.com', port=3306, user=db_user, password=db_password, db='AEfWGNA9zC')
 
 # db = pymysql.connect(host='remotemysql.com', port=3306, user='AEfWGNA9zC', password='g0PRYTjC6R', db='AEfWGNA9zC')
-# cur = db.cursor()
-# db.autocommit(True)
+cur = db.cursor()
+db.autocommit(True)
 
 
 class Msql:                 # this class is for "users" table

@@ -56,12 +56,12 @@ pipeline{
         }
         stage('combined testing') {
             when { 
-                expression {params.TEST =='combined ${CREDS_USR} ${CREDS_PSW}'}
+                expression {params.TEST =='combined'}
             }
             steps {
                 input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
                 script {
-                    sh 'python combined_testing.py'
+                    sh 'python combined_testing.py ${CREDS_USR} ${CREDS_PSW}'
                 }
             }
         }    

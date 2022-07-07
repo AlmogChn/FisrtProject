@@ -18,7 +18,7 @@ pipeline{
                     properties([pipelineTriggers([pollSCM('30 * * * *')])])
                 }
                 git 'https://github.com/AlmogChn/project_second_part.git'
-                sh ' nohup python db_connector.py ${CREDS_USR} ${CREDS_PSW} &'
+                sh ' python db_connector.py ${CREDS_USR} ${CREDS_PSW} &'
             }
         }
         stage('run backend server') {

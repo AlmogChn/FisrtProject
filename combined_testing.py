@@ -5,6 +5,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 import requests
 import db_connector
+import sys
 
 db_user = sys.argv[1]
 db_password = sys.argv[2]

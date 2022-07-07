@@ -50,7 +50,7 @@ pipeline{
             }
             steps{
                 script {
-                    sh 'python frontend_testing.py'
+                    sh 'python frontend_testing.py '
                 }
             }
         }

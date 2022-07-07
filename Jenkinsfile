@@ -18,7 +18,6 @@ pipeline{
                     properties([pipelineTriggers([pollSCM('30 * * * *')])])
                 }
                 git 'https://github.com/AlmogChn/project_second_part.git'
-                sh ' python db_connector.py ${CREDS_USR} ${CREDS_PSW} &'
             }
         }
         stage('run backend server') {
@@ -41,7 +40,7 @@ pipeline{
             }
             steps {
                 script {
-                    sh 'python backend_testing.py ${CREDS_USR} ${CREDS_PSW}'
+                    sh 'python backend_testing.py'
                 }
             }
         }
@@ -51,7 +50,7 @@ pipeline{
             }
             steps{
                 script {
-                    sh 'python frontend_testing.py ${CREDS_USR} ${CREDS_PSW}'
+                    sh 'python frontend_testing.py '
                 }
             }
         }
@@ -62,7 +61,7 @@ pipeline{
             steps {
                 input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
                 script {
-                    sh 'python combined_testing.py ${CREDS_USR} ${CREDS_PSW}'
+                    sh 'python combined_testing.py'
                 }
             }
         }    

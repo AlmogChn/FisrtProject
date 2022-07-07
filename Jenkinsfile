@@ -17,14 +17,14 @@ pipeline{
         stage('run backend server') {
              steps {
                 script{ 
-                    sh ' nohup python web_app.py &'
+                    sh ' nohup python rest_app.py &'
                 }
              }
         }
         stage('run fronted server') {
             steps {
                 script {
-                    bat 'python start /min web_app.py'
+                    sh ' nohup python web_app.py &'
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline{
             }
             steps {
                 script {
-                    bat 'python backend_testing.py'
+                    sh 'python backend_testing.py'
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline{
             }
             steps{
                 script {
-                    bat 'python frontend_testing.py'
+                    sh 'python frontend_testing.py'
                 }
             }
         }
@@ -55,14 +55,14 @@ pipeline{
             steps {
                 input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
                 script {
-                    bat 'python combined_testing.py'
+                    sh 'python combined_testing.py'
                 }
             }
         }    
         stage('clean environment') {
             steps {
                 script {
-                    bat 'python clean_environment.py'
+                    sh 'python clean_environment.py'
                 }
             }
         }

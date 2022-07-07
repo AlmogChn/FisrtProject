@@ -1,5 +1,8 @@
 pipeline{ 
     agent any
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
+    }
     parameters { 
         choice (name: 'TEST',
                 choices: ['combined', 'frontend', 'backend'],

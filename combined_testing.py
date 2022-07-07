@@ -1,5 +1,3 @@
-import sys
-
 from pymysql import OperationalError
 from selenium import webdriver
 from selenium.common import NoSuchElementException

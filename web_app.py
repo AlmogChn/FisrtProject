@@ -1,7 +1,16 @@
+import sys
+
+import pymysql
 from flask import Flask
 import db_connector
 import os
 import signal
+
+db_user = sys.argv[1]
+db_password = sys.argv[2]
+db = pymysql.connect(host='remotemysql.com', port=3306, user=db_user, password=db_password, db='AEfWGNA9zC')
+cur = db.cursor()
+db.autocommit(True)
 
 app = Flask(__name__)
 

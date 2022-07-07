@@ -1,5 +1,8 @@
 pipeline{ 
     agent any
+    options {
+        buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
+    }
     parameters { 
         choice (name: 'TEST',
                 choices: ['combined', 'frontend', 'backend'],
@@ -9,7 +12,7 @@ pipeline{
         stage('checkout') {
             steps {
                 script { 
-                    properties([pipelineTriggers([pollSCM('30 * * * *')])])
+                    properties([pipelineTriggers([pollSCM('* * * * *')])])
                 }
                 git 'https://github.com/AlmogChn/project_second_part.git'
             }
@@ -17,14 +20,14 @@ pipeline{
         stage('run backend server') {
              steps {
                 script{ 
-                    sh ' nohup python rest_app.py &'
+                    bat 'python rest_app.py'
                 }
              }
         }
         stage('run fronted server') {
             steps {
                 script {
-                    sh ' nohup python web_app.py &'
+                    bat 'python start /min web_app.py'
                 }
             }
         }
@@ -34,7 +37,7 @@ pipeline{
             }
             steps {
                 script {
-                    sh 'python backend_testing.py'
+                    bat 'python backend_testing.py'
                 }
             }
         }
@@ -44,7 +47,7 @@ pipeline{
             }
             steps{
                 script {
-                    sh 'python frontend_testing.py'
+                    bat 'python frontend_testing.py'
                 }
             }
         }
@@ -55,14 +58,14 @@ pipeline{
             steps {
                 input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
                 script {
-                    sh 'python combined_testing.py'
+                    bat 'python combined_testing.py'
                 }
             }
         }    
         stage('clean environment') {
             steps {
                 script {
-                    sh 'python clean_environment.py'
+                    bat 'python clean_environment.py'
                 }
             }
         }

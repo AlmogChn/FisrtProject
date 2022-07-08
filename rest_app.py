@@ -57,4 +57,4 @@ def stop_server():
  return 'Server stopped'
 
 
-app.run(host='1S27.0.0.1', debug=True, port=5000)
+app.run(host='127.0.0.1', debug=True, port=5000)

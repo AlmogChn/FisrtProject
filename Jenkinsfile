@@ -61,7 +61,7 @@ pipeline{
             steps {
                 input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
                 script {
-                    sh 'python combined_testing.py'
+                    sh 'python combined_testing.py AEfWGNA9zC g0PRYTjC6R'
                 }
             }
         }    

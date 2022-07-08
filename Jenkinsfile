@@ -4,7 +4,7 @@ pipeline{
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
     environment {
-        CERDS = credentials('Database')
+        CREDS = credentials('project0')
     }
     parameters { 
         choice (name: 'TEST',
@@ -23,14 +23,14 @@ pipeline{
         stage('run backend server') {
              steps {
                 script{ 
-                    sh ' nohup python rest_app.py & ${CREDS_USR} ${CREDS_PSW} '
+                    sh ' nohup python rest_app.py $CREDS_USR $CREDS_PSW &'
                 }
              }
         }
         stage('run fronted server') {
             steps {
                 script {
-                    sh ' nohup python web_app.py & ${CREDS_USR} ${CREDS_PSW}'
+                    sh ' nohup python web_app.py $CREDS_USR $CREDS_PSW &'
                 }
             }
         }
@@ -61,7 +61,7 @@ pipeline{
             steps {
                 input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
                 script {
-                    sh 'python combined_testing.py ${CREDS_USR} ${CREDS_PSW}'
+                    sh 'python combined_testing.py $CREDS_USR $CREDS_PSW'
                 }
             }
         }    

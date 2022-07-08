@@ -1,14 +1,11 @@
 import sys
-
 import pymysql
-
 import db_connector
 from flask import Flask, request
 import os
 import signal
 
 app = Flask(__name__)
-
 
 @app.route('/users/<int:user_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def user(user_id):

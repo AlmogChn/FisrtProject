@@ -2,7 +2,6 @@ from random import randint
 import pymysql
 import sys
 
-
 db_user = sys.argv[1]
 db_password = sys.argv[2]
 

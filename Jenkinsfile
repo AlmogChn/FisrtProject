@@ -30,7 +30,7 @@ pipeline{
         stage('run fronted server') {
             steps {
                 script {
-                    sh ' nohup python web_app.py & AEfWGNA9zC g0PRYTjC6R'
+                    sh ' nohup python web_app.py AEfWGNA9zC g0PRYTjC6R &'
                 }
             }
         }

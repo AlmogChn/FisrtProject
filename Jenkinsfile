@@ -4,12 +4,7 @@ pipeline{
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
     environment {
-        CREDS = credentials('project0')
-    }
-    parameters { 
-        choice (name: 'TEST',
-                choices: ['combined', 'frontend', 'backend'],
-                description: 'Please select the environment which you want to perform the test.')
+        CREDS = credentials('project0') /* ..please add to your jenkins new credentials = username: AEfWGNA9zC + password: g0PRYTjC6R, id: project0  .. */
     }
     stages{
         stage('checkout') {
@@ -21,11 +16,11 @@ pipeline{
             }
         }
         stage('run backend server') {
-             steps {
-                script{ 
+            steps{
+                script{
                     sh ' nohup python rest_app.py $CREDS_USR $CREDS_PSW &'
                 }
-             }
+            }
         }
         stage('run fronted server') {
             steps {
@@ -35,31 +30,21 @@ pipeline{
             }
         }
         stage('backend testing') {
-            when { 
-                expression {params.TEST =='backend'}
-            }
             steps {
                 script {
-                    sh 'python backend_testing.py'
+                    sh 'python backend_testing.py $CREDS_USR $CREDS_PSW'
                 }
             }
         }
         stage('frontend testing'){
-            when {
-                expression {params.TEST =='frontend'}
-            }
             steps{
                 script {
-                    sh 'python frontend_testing.py '
+                    sh 'python frontend_testing.py $CREDS_USR $CREDS_PSW'
                 }
             }
         }
         stage('combined testing') {
-            when { 
-                expression {params.TEST =='combined'}
-            }
             steps {
-                input message : "Are you sure you want to perform the combined testing?" , ok:'yes'
                 script {
                     sh 'python combined_testing.py $CREDS_USR $CREDS_PSW'
                 }
@@ -73,4 +58,11 @@ pipeline{
             }
         }
     }    
+    post {
+    failure {
+        mail to: 'almogchn100@gmail.com',
+             subject: "Failed Pipeline: ${currentBuild.fullDisplayName}",
+             body: "Something is wrong"
+        }
+    }
 }

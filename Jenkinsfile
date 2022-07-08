@@ -23,7 +23,7 @@ pipeline{
         stage('run backend server') {
              steps {
                 script{ 
-                    sh ' nohup python rest_app.py & AEfWGNA9zC g0PRYTjC6R'
+                    sh ' nohup python rest_app.py AEfWGNA9zC g0PRYTjC6R &'
                 }
              }
         }

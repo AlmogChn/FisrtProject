@@ -11,7 +11,7 @@ db_user = sys.argv[1]
 db_password = sys.argv[2]
 
 try:
-    res = requests.post('http://127.0.0.1:5000/users/1421', json={"user_name": 'fds'})
+    res = requests.post('http://127.0.0.1:5000/users/1###421', json={"user_name": 'fds'})
     print(res.json())
 
     res = requests.get('http://127.0.0.1:5000/users/1421', json={"user_name": 'sdf'})

@@ -4,32 +4,47 @@ pipeline{
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
     environment {
-        CREDS = credentials('project0') /* ..please add to your jenkins new credentials = username: AEfWGNA9zC + password: g0PRYTjC6R, id: project0  .. */
+        CREDS = credentials('project0')   /* ..please add to your jenkins new credentials = username: AEfWGNA9zC + password: g0PRYTjC6R, id: project0  .. */
+    }
+    parameters { 
+        choice (name: 'TEST',
+                choices: ['combined', 'frontend', 'backend'],
+                description: 'Please select the environment which you want to perform the test.')
     }
     stages{
         stage('checkout') {
             steps {
-                script { 
-                    properties([pipelineTriggers([pollSCM('30 * * * *')])])
-                }
-                git 'https://github.com/AlmogChn/project_second_part.git'
+                git branch: 'bonus', url: 'https://github.com/AlmogChn/project_second_part.git'
             }
         }
         stage('run backend server') {
             steps{
                 script{
-                    sh ' nohup python rest_app.py $CREDS_USR $CREDS_PSW &'
+                    try {
+                        sh ' nohup python rest_app.py $CREDS_USR $CREDS_PSW &'
+                    }
+                    catch(NoRouteToHostException e){
+                        echo 'non-existing route'
+                    }
                 }
             }
         }
         stage('run fronted server') {
             steps {
                 script {
-                    sh ' nohup python web_app.py $CREDS_USR $CREDS_PSW &'
+                    try{
+                        sh ' nohup python web_app.py $CREDS_USR $CREDS_PSW &'
+                    }
+                    catch(NoRouteToHostException e){
+                        echo 'non-existing route'
+                    }
                 }
             }
         }
         stage('backend testing') {
+            when { 
+                expression {params.TEST =='backend'}
+            }
             steps {
                 script {
                     sh 'python backend_testing.py $CREDS_USR $CREDS_PSW'
@@ -37,6 +52,9 @@ pipeline{
             }
         }
         stage('frontend testing'){
+            when {
+                expression {params.TEST =='frontend'}
+            }
             steps{
                 script {
                     sh 'python frontend_testing.py $CREDS_USR $CREDS_PSW'
@@ -44,6 +62,9 @@ pipeline{
             }
         }
         stage('combined testing') {
+            when { 
+                expression {params.TEST =='combined'}
+            }
             steps {
                 script {
                     sh 'python combined_testing.py $CREDS_USR $CREDS_PSW'

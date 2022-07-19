@@ -3,7 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 
-driver = webdriver.Chrome(executable_path="C:\\Users\Almog\\Downloads\\chromedriver_win32\\ChromeDriver.exe")
+driver = webdriver.Chrome(executable_path="C:\\Users\אלמוג\\Downloads\\chromedriver_win32\\ChromeDriver.exe")
 driver.implicitly_wait(5)
 driver.get('http:///127.0.0.1:5001/users/2')
 try:
